@@ -1,0 +1,45 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    container_name: 'db'
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - backend
+  # nodejs:
+  #   build: ./BACK
+  #   container_name: nodejs
+  #   ports:
+  #     - "5000:5000"
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - backend
+  #   environment:
+  #     SECRET_JWT: ${SECRET_JWT}
+  #     USERNAME_LOGIN: ${USERNAME_LOGIN}
+  #     PASSWORD_LOGIN: ${PASSWORD_LOGIN}
+  #     DB_NAME: ${DB_NAME}
+  #     DB_USER: ${DB_USER}
+  #     DB_HOST: ${DB_HOST}
+  #     DB_DRIVER: ${DB_DRIVER}
+  #     DB_PASSWORD: ${DB_PASSWORD}
+  #     DB_PORT: ${DB_PORT}
+
+networks:
+  backend:
+    driver: 'bridge'
+
+volumes:
+  my-db:
